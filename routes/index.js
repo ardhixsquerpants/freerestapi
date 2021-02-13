@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 require('dotenv').config()
 
-var title = "Free Rest API | Online API's Tools";
+var title = "Ardhi Xsquerpant'S";
 
   router.get('/doc/hash_identifier', (req, res) => {
     res.render('hash_ident', {host: process.env.S_HOST, title: title})
