@@ -116,10 +116,6 @@ var title = "Ardhi Xsquerpant'S";
     res.render('index', {host: process.env.S_HOST, title: title})
   })
   
-  router.get('/doc/cuaca', (req, res) => {
-	res.render('cuaca', {host: process.env.S_HOST, title: title})
-  })
-  
   router.get('/doc/nulis' , (req, res) => {
 	res.render('nulis', {host: process.env.S_HOST, title: title})
   })
