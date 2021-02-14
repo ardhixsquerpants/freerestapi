@@ -16,6 +16,7 @@ const {
     IpLookup,
     hashIdent,
 	Tiktok,
+	Youtube,
 	KBBI,
 	Lirik,
 	Pornhub,
@@ -28,6 +29,7 @@ const {
 	Cekresi,
 	Gempa,
 	Covid19,
+	Cuaca,
 	Nekopoi,
 	IGStalk,
 	FB
@@ -91,6 +93,22 @@ router.get('/corona', (req, res) => {
 
 router.get('/nekopoi', (req, res) => {
 	res.send("Nekopoi Discontinued, Im Sorry, For Source See On /lib/utils/nekopoi.js, its work with local scraping");
+})
+
+router.get('/cuaca', (req, res) => {
+	var lokasi = req.query.p;
+	if(!lokasi || lokasi == undefined)
+		return res.send({
+			code:400,
+			message:"p not found"
+		})
+	Cuaca(lokasi)
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {
+				res.send(err);
+			})
 })
 
 router.get('/spam', (req, res) => {
@@ -507,6 +525,27 @@ router.get('/nulis', (req, res) => {
     }
 })
 
+router.get('/yt2', (req, res) => {
+	var id = req.query.url || req.query.link;
+	if(!id || id == undefined) 
+        return response.send(
+		{
+			code:400,
+			message:'Input ID Or Link of Video'
+		});
+    if(id.includes("youtube")){
+		urls = id;
+		var r, rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+    	r = urls.match(rx);
+		id = r[1];
+    }
+	res.header('Content-Disposition', `attachment; filename="audio.mp3"`);
+	ytdl(id, {
+      format: 'mp3',
+      filter: 'audioonly'
+     }).pipe(res);
+})
+
 router.get('/ph', (req, res) => {
 	const link = req.query.l || req.query.link
 	const pixel = req.query.p
@@ -543,6 +582,21 @@ router.get('/ushort', (req, res) => {
 			.catch(err => {
 				res.send(err)
 			})
+})
+
+router.get('/yt', (req, res) => {
+	const url = req.query.url || req.query.link;
+	if(!url || url == undefined)
+	return res.send({
+        code: 400,
+        message: 'input parameter url atau link.'
+    })
+	Youtube(url)
+			.then(data => {
+				res.send(data);
+			})
+			.catch(err => {res.send(err)})
+})
 
 router.get('/tiktok', (req, res) => {
 	const url = req.query.url || req.query.link;
