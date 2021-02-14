@@ -16,7 +16,6 @@ const {
     IpLookup,
     hashIdent,
 	Tiktok,
-	Youtube,
 	KBBI,
 	Lirik,
 	Pornhub,
